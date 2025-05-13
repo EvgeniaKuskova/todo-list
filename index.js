@@ -50,6 +50,24 @@ class Component {
   }
 }
 
+class AddTask extends Component {
+  constructor() {
+    super();
+  }
+  onAddTask(todo) {
+    if (todo.state.inputText.trim()) {
+      todo.state.todo.push({
+        id: todo.state.lastId + 1,
+        text: todo.state.inputText,
+        completed: false
+      });
+      todo.state.inputText = "";
+      todo.state.lastId += 1;
+      todo.update();
+    }
+  }
+}
+
 class TodoList extends Component {
   constructor() {
     super();
@@ -93,7 +111,7 @@ class TodoList extends Component {
         "ul",
         { id: "todos" },
         this.state.todo.map((todo) => {
-          const  attributes = {
+          const attributes = {
                 type: "checkbox",
                 "data-id": todo.id,
               };
@@ -122,17 +140,8 @@ class TodoList extends Component {
   }
 
   onAddTask() {
-    if (this.state.inputText.trim()) {
-      this.state.todo.push({
-        id: this.state.lastId + 1,
-        text: this.state.inputText,
-        completed: false
-      });
-      this.state.inputText = "";
-      this.state.lastId += 1;
-      this.update();
-    }
-  }
+      new AddTask().onAddTask(this);
+  };
 
   onAddInputChange(event) {
     this.state.inputText = event.target.value;
