@@ -1,4 +1,4 @@
-﻿function createElement(tag, attributes, children) {
+﻿function createElement(tag, attributes, children, ) {
   const element = document.createElement(tag);
 
   if (attributes) {
@@ -38,13 +38,16 @@ class TodoList extends Component {
   constructor() {
     super();
     this.state = {
+      inputText : "",
       todo: [
         {id: 1, text: "Сделать домашку", completed: false},
         {id: 2, text: "Сделать практику", completed: false},
         {id: 3, text: "Пойти домой", completed: false}
-      ]
+      ],
+      lastId : 3
     }
   }
+
   render() {
     return createElement("div", { class: "todo-list" }, [
       createElement("h1", {}, "TODO List"),
@@ -71,7 +74,20 @@ class TodoList extends Component {
           )
       ),
     ]);
-  }
+  };
+
+  onAddTask() {
+    if (this.state.inputText.trim()){
+      this.state.todo.push({id: this.state.lastId + 1, text : this.state.inputText, completed : false});
+      this.state.inputText = "";
+      this.state.lastId += 1;
+      
+    }
+  };
+
+  onAddInputChange(event) {
+    this.state.inputText = event.target.value;
+  };
 }
 
 document.addEventListener("DOMContentLoaded", () => {
