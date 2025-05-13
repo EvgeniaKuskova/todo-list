@@ -50,7 +50,6 @@ class Component {
   }
 }
 
-// Компонент для добавления задачи
 class AddTask extends Component {
   constructor(onAddTask) {
     super();
@@ -82,7 +81,6 @@ class AddTask extends Component {
   }
 }
 
-// Компонент для одного элемента задачи
 class Task extends Component {
   constructor(todo, onToggleComplete, onDeleteTask) {
     super();
@@ -122,7 +120,6 @@ class Task extends Component {
   }
 }
 
-// Главный компонент TodoList
 class TodoList extends Component {
   constructor() {
     super();
@@ -136,7 +133,6 @@ class TodoList extends Component {
       lastId: 3,
     };
 
-    // Привязываем методы к контексту
     this.onAddTask = this.onAddTask.bind(this);
     this.onToggleComplete = this.onToggleComplete.bind(this);
     this.onDeleteTask = this.onDeleteTask.bind(this);
