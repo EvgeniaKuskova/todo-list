@@ -92,19 +92,21 @@ class TodoList extends Component {
       createElement(
         "ul",
         { id: "todos" },
-        this.state.todo.map((todo) =>
-          createElement(
+        this.state.todo.map((todo) => {
+          const  attributes = {
+                type: "checkbox",
+                "data-id": todo.id,
+              };
+              if (todo.completed)
+                attributes.checked = true;
+          return createElement(
             "li", 
             { 
               key: todo.id,
               style: `color: ${todo.completed ? "gray" : "black"}; text-decoration: ${todo.completed ? "line-through" : "none"}`
             }, 
             [
-              createElement("input", {
-                type: "checkbox",
-                checked: todo.completed,
-                "data-id": todo.id,
-              }),
+              createElement("input", attributes),
               createElement("label", {}, todo.text),
               createElement("button", { "data-id": todo.id }, "🗑️"),
             ],
@@ -113,6 +115,7 @@ class TodoList extends Component {
               click: (e) => e.target.textContent === "🗑️" && this.onDeleteTask(todo.id),
             }
           )
+        }
         )
       ),
     ]);
