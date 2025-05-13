@@ -53,7 +53,7 @@ class Component {
 class AddTask extends Component {
   constructor(onAddTask) {
     super();
-    this.onAddTask = onAddTask; // Принимаем коллбэк для добавления задачи
+    this.onAddTask = onAddTask;
   }
 
   render() {
@@ -69,11 +69,11 @@ class AddTask extends Component {
           createElement("button", { id: "add-btn" }, "+"),
         ],
         {
-          input: (e) => (this.inputValue = e.target.value), // Сохраняем значение ввода
+          input: (e) => (this.inputValue = e.target.value),
           click: (e) => {
             if (e.target.id === "add-btn" && this.inputValue?.trim()) {
-              this.onAddTask(this.inputValue); // Вызываем коллбэк для добавления задачи
-              this.inputValue = ""; // Очищаем поле ввода
+              this.onAddTask(this.inputValue);
+              this.inputValue = "";
             }
           },
         }
@@ -85,8 +85,8 @@ class Task extends Component {
   constructor(todo, onToggleComplete, onDeleteTask) {
     super();
     this.todo = todo;
-    this.onToggleComplete = onToggleComplete; // Принимаем коллбэк для изменения статуса
-    this.onDeleteTask = onDeleteTask; // Принимаем коллбэк для удаления задачи
+    this.onToggleComplete = onToggleComplete;
+    this.onDeleteTask = onDeleteTask;
   }
 
   render() {
@@ -112,9 +112,9 @@ class Task extends Component {
         {
           change: (e) =>
               e.target.type === "checkbox" &&
-              this.onToggleComplete(this.todo.id), // Коллбэк для изменения статуса
+              this.onToggleComplete(this.todo.id),
           click: (e) =>
-              e.target.textContent === "🗑️" && this.onDeleteTask(this.todo.id), // Коллбэк для удаления
+              e.target.textContent === "🗑️" && this.onDeleteTask(this.todo.id),
         }
     );
   }
@@ -141,12 +141,12 @@ class TodoList extends Component {
   render() {
     return createElement("div", { class: "todo-list" }, [
       createElement("h1", {}, "TODO List"),
-      new AddTask(this.onAddTask).getDomNode(), // Используем компонент AddTask
+      new AddTask(this.onAddTask).getDomNode(),
       createElement(
           "ul",
           { id: "todos" },
           this.state.todo.map((todo) =>
-              new Task(todo, this.onToggleComplete, this.onDeleteTask).getDomNode() // Используем компонент Task
+              new Task(todo, this.onToggleComplete, this.onDeleteTask).getDomNode()
           )
       ),
     ]);
