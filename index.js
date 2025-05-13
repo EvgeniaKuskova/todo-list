@@ -38,6 +38,12 @@ class Component {
     this._domNode = this.render();
     return this._domNode;
   }
+
+  update() {
+    const newTodo = this.render();
+    document.body.appendChild(newTodo)
+    this._domNode = newTodo;
+  }
 }
 
 class TodoList extends Component {
@@ -66,13 +72,11 @@ class TodoList extends Component {
               type: "text",
               placeholder: "Задание",
               value: this.state.inputText,
+            }, null, {
+              change: this.onAddInputChange.bind(this),
             }),
-            createElement("button", { id: "add-btn" }, "+"),
+            createElement("button", { id: "add-btn" }, "+", {click: this.onAddTask.bind(this)}),
           ],
-          {
-            input: this.onAddInputChange,
-            button: { click: this.onAddTask },
-          }
       ),
       createElement(
           "ul",
@@ -82,9 +86,9 @@ class TodoList extends Component {
                 createElement("input", {
                   type: "checkbox",
                   checked: todo.completed,
-                }),
+                }, null, ),
                 createElement("label", {}, todo.text),
-                createElement("button", {}, "🗑️"),
+                createElement("button", {}, "🗑️", ),
               ])
           )
       ),
@@ -96,11 +100,13 @@ class TodoList extends Component {
       this.state.todo.push({id: this.state.lastId + 1, text : this.state.inputText, completed : false});
       this.state.inputText = "";
       this.state.lastId += 1;
+      this.update();
     }
   };
 
   onAddInputChange(event) {
     this.state.inputText = event.target.value;
+    this.update();
   };
 }
 
